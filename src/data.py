@@ -131,7 +131,7 @@ def read_fasta(fastafile):
 
 import h5py
 import numpy as np
-import pickle5
+import pickle as pickle5
 from sklearn.model_selection import ShuffleSplit
 from src.constants import *
 
