@@ -9,7 +9,7 @@ transformers
 pytorch_lightning
 sentencepiece
 h5py
-pandas
+pandas<2.0.0
 scikit-learn
 
 # styles
