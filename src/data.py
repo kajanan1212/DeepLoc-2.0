@@ -339,7 +339,7 @@ class DataloaderHandler:
         print("split_train_df")
         print(split_train_df.to_csv("split_train_df.csv", index=False))
         print("train_dataset")
-        print(train_dataset.to_csv("train_dataset.csv", index=False))
+        print(train_dataset.data_df.to_csv("train_dataset.csv", index=False))
         print("train_batches")
         print(train_batches)
         print("train_dataloader")
