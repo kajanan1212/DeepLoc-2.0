@@ -337,13 +337,19 @@ class DataloaderHandler:
         train_batches = train_dataset.get_batch_indices(4096*4, BATCH_SIZE, extra_toks_per_seq=0)
         train_dataloader = torch.utils.data.DataLoader(train_dataset, collate_fn=TrainBatchConverter(self.alphabet, self.embed_len), batch_sampler=train_batches)
         print("split_train_df")
-        print(split_train_df)
+        print(split_train_df.to_csv("split_train_df.csv", index=False))
         print("train_dataset")
-        print(train_dataset)
+        print(train_dataset.to_csv("train_dataset.csv", index=False))
         print("train_batches")
         print(train_batches)
         print("train_dataloader")
-        print(train_dataloader)
+        # Get a batch of data
+        data_iter = iter(train_dataloader)
+        images, labels = data_iter.next()
+
+        # Print the shape of the images and labels
+        print("Shape of images:", images.shape)
+        print("Shape of labels:", labels.shape)
 
         val_dataset = EmbeddingsLocalizationDataset(embedding_file, split_val_df)
         val_batches = val_dataset.get_batch_indices(4096*4, BATCH_SIZE, extra_toks_per_seq=0)
