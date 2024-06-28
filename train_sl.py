@@ -14,7 +14,7 @@ warnings.filterwarnings(
     "ignore", ".*Trying to infer the `batch_size` from an ambiguous collection.*"
 )
 
-def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, outer_i: int):
+def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, outer_i: int, classical_encoder: bool=False):
     train_dataloader, val_dataloader = datahandler.get_train_val_dataloaders(outer_i)
 
     checkpoint_callback = ModelCheckpoint(
