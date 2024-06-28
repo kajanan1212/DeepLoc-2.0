@@ -5,6 +5,8 @@ import re
 import pandas as pd
 import time 
 import os
+from src.DeepLoc2.classical_encoder import ClassicEncoder
+
 class FastaBatchedDatasetTorch(torch.utils.data.Dataset):
     def __init__(self, data_df):
         self.data_df = data_df
@@ -310,6 +312,13 @@ class SignalTypeDataset(torch.utils.data.Dataset):
     def __len__(self):
         return self.X.shape[0]
 
+# Instantiate the ClassicEncoder
+encoder = ClassicEncoder()
+# Function to apply encoding and add it as a new column
+def apply_encoding(df, column_name, encoder_method, new_column_name, length=1024):
+    df[new_column_name] = df[column_name].apply(lambda x: encoder_method(x, length))
+    return df
+
 
 class DataloaderHandler:
     def __init__(self, clip_len, alphabet, embedding_file, embed_len) -> None:
@@ -338,6 +347,9 @@ class DataloaderHandler:
         (split_train_idx, split_val_idx) = next(sss_tt.split(X))
         split_train_df =  train_df.iloc[split_train_idx].reset_index(drop=True)
         split_val_df = train_df.iloc[split_val_idx].reset_index(drop=True)
+
+        split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_one_hot_encoding, 'Sequence_one_hot')
+        split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_one_hot_encoding, 'Sequence_one_hot')
 
         print("/nsplit_train_df.head()")
         print(split_train_df.head())

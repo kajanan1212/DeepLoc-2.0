@@ -22,6 +22,7 @@ def get_fixed_size_encoding(
 class ClassicEncoder:
     protein_alphabet = [
         "A",
+        "B",
         "C",
         "D",
         "E",
@@ -38,8 +39,10 @@ class ClassicEncoder:
         "R",
         "S",
         "T",
+        "U",
         "V",
         "W",
+        "X",
         "Y",
     ]
 
