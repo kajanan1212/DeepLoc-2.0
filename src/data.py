@@ -1,11 +1,9 @@
-import pickle
 import torch
 from Bio import SeqIO
 import re
 import pandas as pd
-import time 
 import os
-from src.DeepLoc2.classical_encoder import ClassicEncoder
+from src.classical_encoder import ClassicEncoder
 
 class FastaBatchedDatasetTorch(torch.utils.data.Dataset):
     def __init__(self, data_df):
