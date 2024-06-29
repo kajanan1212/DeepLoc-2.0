@@ -3,7 +3,9 @@ from Bio import SeqIO
 import re
 import pandas as pd
 import os
+
 from src.classical_encoder import ClassicEncoder
+
 
 class FastaBatchedDatasetTorch(torch.utils.data.Dataset):
     def __init__(self, data_df):
@@ -310,8 +312,11 @@ class SignalTypeDataset(torch.utils.data.Dataset):
     def __len__(self):
         return self.X.shape[0]
 
+
 # Instantiate the ClassicEncoder
 encoder = ClassicEncoder()
+
+
 # Function to apply encoding and add it as a new column
 def apply_encoding(df, column_name, encoder_method, new_column_name, length=1024):
     df[new_column_name] = df[column_name].apply(lambda x: encoder_method(x, length))
