@@ -330,7 +330,7 @@ class DataloaderHandler:
         self.embedding_file = embedding_file
         self.embed_len = embed_len
 
-    def get_train_val_dataloaders(self, outer_i):
+    def get_train_val_dataloaders(self, outer_i, encode= 'tfidf'):
         data_df = get_swissprot_df(self.clip_len)
 
         train_df = data_df[data_df.Partition != outer_i].reset_index(drop=True)
@@ -342,8 +342,24 @@ class DataloaderHandler:
         split_train_df =  train_df.iloc[split_train_idx].reset_index(drop=True)
         split_val_df = train_df.iloc[split_val_idx].reset_index(drop=True)
 
-        split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_tfidf_encoding, 'Sequence_tfidf')
-        split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_tfidf_encoding, 'Sequence_tfidf')
+        if encode == "tfidf":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_tfidf_encoding, 'Sequence_tfidf')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_tfidf_encoding, 'Sequence_tfidf')
+        elif encode == "onehot":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_one_hot_encoding(), 'Sequence_one_hot')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_one_hot_encoding(), 'Sequence_one_hot')
+        elif encode == "bow":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_bow_encoding(),'Sequence_bow')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_bow_encoding(), 'Sequence_bow')
+        elif encode == "ngram":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_ngram_encoding(),'Sequence_ngram')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_ngram_encoding(), 'Sequence_ngram')
+        elif encode == "binary":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_binary_encoding(),'Sequence_binary')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_binary_encoding(), 'Sequence_binary')
+        elif encode == "label":
+            split_train_df = apply_encoding(split_train_df, 'Sequence', encoder.get_label_encoding(),'Sequence_label')
+            split_val_df = apply_encoding(split_val_df, 'Sequence', encoder.get_label_encoding(), 'Sequence_label')
 
         # print(split_train_df[CATEGORIES].mean())
         # print(split_val_df[CATEGORIES].mean())
