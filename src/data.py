@@ -332,9 +332,12 @@ class DataloaderHandler:
 
     def get_train_val_dataloaders(self, outer_i):
         data_df = get_swissprot_df(self.clip_len)
+
         train_df = data_df[data_df.Partition != outer_i].reset_index(drop=True)
+
         X = np.stack(train_df["ACC"].to_numpy())
         sss_tt = ShuffleSplit(n_splits=1, test_size=2048, random_state=0)
+
         (split_train_idx, split_val_idx) = next(sss_tt.split(X))
         split_train_df =  train_df.iloc[split_train_idx].reset_index(drop=True)
         split_val_df = train_df.iloc[split_val_idx].reset_index(drop=True)
