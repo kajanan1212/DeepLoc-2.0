@@ -34,7 +34,7 @@ def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, out
     )
 
     # Initialize trainer
-    trainer = pl.Trainer(max_epochs=1,
+    trainer = pl.Trainer(max_epochs=3,
                         default_root_dir=model_attrs.save_path + f"/{outer_i}_1Layer",
                         check_val_every_n_epoch = 1,
                         callbacks=[
