@@ -14,8 +14,8 @@ warnings.filterwarnings(
     "ignore", ".*Trying to infer the `batch_size` from an ambiguous collection.*"
 )
 
-def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, outer_i: int):
-    train_dataloader, val_dataloader = datahandler.get_train_val_dataloaders(outer_i)
+def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, outer_i: int, classical_encoder: str=None):
+    train_dataloader, val_dataloader = datahandler.get_train_val_dataloaders(outer_i, classical_encoder)
 
     checkpoint_callback = ModelCheckpoint(
         monitor='bce_loss',
@@ -34,7 +34,7 @@ def train_model(model_attrs: ModelAttributes, datahandler:DataloaderHandler, out
     )
 
     # Initialize trainer
-    trainer = pl.Trainer(max_epochs=1,
+    trainer = pl.Trainer(max_epochs=3,
                         default_root_dir=model_attrs.save_path + f"/{outer_i}_1Layer",
                         check_val_every_n_epoch = 1,
                         callbacks=[

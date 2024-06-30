@@ -7,7 +7,7 @@ ACCURATE = "Accurate"
 
 EMBEDDINGS = {
     FAST: {
-        "embeds": "data_files/embeddings/esm1b_swissprot.h5",
+        "embeds": "../drive/MyDrive/colab-docs/bioinformatics/deep-loc-2.0/data_files/embeddings/dev/esm1b_swissprot.h5",
         "config": "swissprot_esm1b.yaml",
         "source_fasta": "data_files/deeploc_swissprot_clipped1k.fasta"
     },
